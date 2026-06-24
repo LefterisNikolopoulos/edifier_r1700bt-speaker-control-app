@@ -1,0 +1,94 @@
+esphome:
+  name: esp32-ir-remote
+  friendly_name: ESP32 IR Remote Control
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  platform: esphome
+  password: "YOUR_OTA_PASSWORD"
+
+wifi:
+  ssid: "YOUR_WIFI_SSID"
+  password: "YOUR_WIFI_PASSWORD"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "YOUR_FALLBACK_AP_SSID"
+    password: "YOUR_FALLBACK_AP_PASSWORD"
+
+captive_portal:
+
+# ==================== INFRARED (IR) ====================
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: true
+  dump: all
+
+remote_transmitter:
+  pin: GPIO4
+  carrier_duty_percent: 50%
+
+# Edifier remote controls - Buttons for momentary actions
+button:
+  - platform: template
+    name: "Edifier Power"
+    id: edifier_power_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xFE01
+
+  - platform: template
+    name: "Edifier Mute"
+    id: edifier_mute_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xFF00
+
+  - platform: template
+    name: "Edifier Volume Up"
+    id: edifier_vol_up_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xF609
+
+  - platform: template
+    name: "Edifier Volume Down"
+    id: edifier_vol_down_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xF30C
+
+  - platform: template
+    name: "Edifier Bluetooth"
+    id: edifier_bluetooth_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xF50A
+
+  - platform: template
+    name: "Edifier AUX/Line In"
+    id: edifier_aux_btn
+    on_press:
+      - remote_transmitter.transmit_nec:
+          address: 0xE710
+          command: 0xEA15
+
+# Web server for testing
+web_server:
+  port: 80

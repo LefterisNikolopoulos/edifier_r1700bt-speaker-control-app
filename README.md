@@ -1,66 +1,78 @@
-# Edifier Speaker Control App
+# Edifier Speaker Control App & ESPHome Remote
 
-Μια προσαρμοσμένη και υψηλής απόδοσης εφαρμογή (companion app) σε **Flutter**, σχεδιασμένη για τον απομακρυσμένο έλεγχο των λειτουργιών των ηχείων Edifier (Power, Volume, Mute, Bluetooth/AUX inputs) μέσω του **Home Assistant**.
+A high-performance, custom-built Flutter companion application and ESPHome configuration designed to manage Edifier speaker functions (Power, Volume, Mute, Bluetooth/AUX inputs) via **Home Assistant**.
 
-Η εφαρμογή επικοινωνεί με μια συσκευή ESP32 (IR blaster) που είναι ενσωματωμένη στο Home Assistant, η οποία αναπαράγει και εκπέμπει τα υπέρυθρα σήματα (IR) του φυσικού τηλεκοντρόλ Edifier. Περιλαμβάνει επίσης πλήρη υποστήριξη Android Home Screen Widgets για άμεσο έλεγχο από την αρχική οθόνη.
-
----
-
-## 🛠️ Τεχνικά Χαρακτηριστικά & Υλοποίηση
-
-*   **Προσαρμοσμένο UI Τηλεκοντρόλ**: Σχεδίαση ενός σύγχρονου και εύχρηστου γραφικού περιβάλλοντος σε σκοτεινό θέμα (Dark Theme) με Material 3, βελτιστοποιημένου για χρήση με το ένα χέρι.
-*   **Ενσωμάτωση Απτικής Ανάδρασης (Haptic Feedback)**: Υλοποίηση δόνησης κατά το πάτημα των πλήκτρων για την προσομοίωση της φυσικής αίσθησης ενός τηλεκοντρόλ.
-*   **Διαδραστικά Widgets Αρχικής Οθόνης**: Πλήρης ενσωμάτωση του πακέτου `home_widget` για την υποστήριξη widget στην αρχική οθόνη του Android. Επιτρέπει τον έλεγχο της τροφοδοσίας, της σίγασης και της έντασης χωρίς να απαιτείται το άνοιγμα της εφαρμογής, μέσω background callbacks.
-*   **Συνεχόμενη Ρύθμιση Έντασης με Παρατεταμένο Πάτημα**: Υλοποίηση μηχανισμού χρονοδιακόπτη (`Timer.periodic`) για την επαναλαμβανόμενη αποστολή εντολών έντασης (Volume Up/Down) όσο ο χρήστης κρατάει πατημένο το πλήκτρο, εξομοιώνοντας τη λειτουργία του φυσικού τηλεκοντρόλ.
-*   **Ασφαλής Επικοινωνία με Home Assistant API**: Σύνδεση με το Home Assistant μέσω REST API, κάνοντας χρήση Long-Lived Access Tokens (JWT) και HTTP POST requests για την ενεργοποίηση των button entities (`button.press`).
-*   **Διαχείριση Εργασιών στο Παρασκήνιο (Background Callback Handler)**: Κατανομή και εκτέλεση εντολών μέσω background service (`@pragma("vm:entry-point")`) όταν ο χρήστης αλληλεπιδρά με τα widgets της αρχικής οθόνης.
+This project provides a complete end-to-end solution:
+1.  **Flutter Android Application**: A mobile remote app with haptic feedback and interactive Home Screen Widgets.
+2.  **ESPHome Firmware**: A configuration for an ESP32 board wired to an Infrared (IR) transmitter, which simulates the physical Edifier remote control signals.
 
 ---
 
-## 🔌 Ρύθμιση & Παραμετροποίηση
+## 🛠️ Technical Features & Implementation
 
-Για να συνδέσετε την εφαρμογή με το δικό σας Home Assistant, τροποποιήστε τις μεταβλητές στο αρχείο [lib/main.dart](file:///c:/Users/lefte/Desktop/esp_speaker_control/lib/main.dart):
-
-1.  **Στοιχεία Σύνδεσης**:
-    *   Ορίστε το `homeAssistantUrl` στη διεύθυνση του δικού σας Home Assistant:
-        ```dart
-        const String homeAssistantUrl = 'http://YOUR_HA_IP:8123';
-        ```
-    *   Ορίστε το `accessToken` στο δικό σας Long-Lived Access Token:
-        ```dart
-        const String accessToken = 'YOUR_LONG_LIVED_ACCESS_TOKEN';
-        ```
-        *(Για τη δημιουργία του: Home Assistant -> Profile -> Long-Lived Access Tokens -> Create Token)*
-
-2.  **Entity IDs**:
-    Βεβαιωθείτε ότι τα entity IDs στο `lib/main.dart` αντιστοιχούν στα δικά σας buttons στο Home Assistant:
-    *   Power: `button.esp32_ir_remote_control_edifier_power`
-    *   Mute: `button.esp32_ir_remote_control_edifier_mute`
-    *   Volume Up: `button.esp32_ir_remote_control_edifier_volume_up`
-    *   Volume Down: `button.esp32_ir_remote_control_edifier_volume_down`
-    *   Bluetooth: `button.esp32_ir_remote_control_edifier_bluetooth`
-    *   AUX: `button.esp32_ir_remote_control_edifier_aux_line_in`
+*   **Custom Gestural Remote UI**: A responsive, modern Material 3 dark-themed user interface optimized for single-handed control.
+*   **Haptic Feedback Integration**: Implements physical device vibration (haptic feedback) on key presses to simulate tactile button interactions.
+*   **Interactive Home Screen Widgets**: Complete integration of the `home_widget` package, enabling widgets on the Android launcher screen. Users can toggle power, mute, or adjust volume directly from the home screen via interactive background service callbacks.
+*   **Debounced Continuous Press Volume Control**: Implements a custom timer mechanism (`Timer.periodic`) to handle volume up/down repeating commands on hold, mimicking a physical remote control button hold.
+*   **Home Assistant REST API Integration**: Communicates securely with Home Assistant using Long-Lived Access Tokens (JWT) and HTTP POST requests to trigger button entity services (`button.press`).
+*   **Background Callback Handler**: Includes an entry-point compilation pragma (`@pragma("vm:entry-point")`) to process background service actions when triggered from the Android system widgets.
+*   **Custom ESPHome IR Transmitter**: The ESP32 acts as a smart node, mapping virtual buttons in Home Assistant to raw NEC Infrared protocol signals matching the Edifier remote commands.
 
 ---
 
-## 📦 Οδηγίες Μεταγλώττισης (Build)
+## 🔌 Hardware Mappings (ESPHome)
 
-### Προαπαιτούμενα
-*   Εγκατεστημένο Flutter SDK (έκδοση v3.0.0 ή νεότερη)
-*   Ρυθμισμένο Android SDK / Android Studio
+The ESPHome node runs on an **ESP32 Dev Module** with the following pin configuration (see [esp32-ir-remote.yaml](file:///c:/Users/lefte/Desktop/esp_speaker_control/esp32-ir-remote.yaml)):
+*   **IR Receiver**: GPIO 14 (used for dumping and learning remote codes)
+*   **IR Transmitter**: GPIO 4 (used for sending commands to the speakers)
 
-### Διαδικασία Build
-1.  Μεταβείτε στον φάκελο του project:
+---
+
+## ⚙️ Configuration & Setup
+
+### 1. ESP32 ESPHome Configuration
+1.  Open [esp32-ir-remote.yaml](file:///c:/Users/lefte/Desktop/esp_speaker_control/esp32-ir-remote.yaml).
+2.  Fill in your WiFi credentials, fallback AP settings, and OTA password:
+    ```yaml
+    wifi:
+      ssid: "YOUR_WIFI_SSID"
+      password: "YOUR_WIFI_PASSWORD"
+    ```
+3.  Flash the file to your ESP32 board using ESPHome dashboard or CLI.
+4.  Once compiled and connected, Home Assistant will automatically discover the new integration and expose the Edifier control buttons.
+
+### 2. Flutter App Connection
+Modify the configuration variables in [lib/main.dart](file:///c:/Users/lefte/Desktop/esp_speaker_control/lib/main.dart):
+1.  Set `homeAssistantUrl` to your local or public Home Assistant address:
+    ```dart
+    const String homeAssistantUrl = 'http://YOUR_HA_IP:8123';
+    ```
+2.  Set `accessToken` to your Long-Lived Access Token:
+    ```dart
+    const String accessToken = 'YOUR_LONG_LIVED_ACCESS_TOKEN';
+    ```
+    *(To generate a token: Home Assistant -> Profile -> Long-Lived Access Tokens -> Create Token)*
+
+---
+
+## 📦 Build Instructions
+
+### Prerequisites
+*   Flutter SDK installed (v3.0.0 or higher)
+*   Android SDK / Android Studio configured
+
+### Step-by-Step Build
+1.  Navigate to the project root directory:
     ```bash
     cd esp_speaker_control
     ```
-2.  Λήψη εξαρτήσεων και πακέτων:
+2.  Fetch packages and dependencies:
     ```bash
     flutter pub get
     ```
-3.  Μεταγλώττιση και δημιουργία του release APK:
+3.  Compile and build the release APK:
     ```bash
     flutter build apk --release
     ```
-4.  Το παραγόμενο αρχείο θα βρίσκεται στη διαδρομή:
+4.  The compiled package will be located at:
     `build/app/outputs/flutter-apk/app-release.apk`
