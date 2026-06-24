@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:gravity="center"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/btn_power"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:background="@drawable/widget_ripple"
+        android:drawableTop="@drawable/ic_power"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Power"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/btn_vol_down"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:background="@drawable/widget_ripple"
+        android:drawableTop="@drawable/ic_volume_down"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Vol -"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/btn_mute"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:background="@drawable/widget_ripple"
+        android:drawableTop="@drawable/ic_volume_off"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Mute"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/btn_vol_up"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:background="@drawable/widget_ripple"
+        android:drawableTop="@drawable/ic_volume_up"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Vol +"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
