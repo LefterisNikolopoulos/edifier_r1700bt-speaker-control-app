@@ -29,8 +29,8 @@ Future<void> backgroundCallback(Uri? uri) async {
 
   if (uri == null) return;
 
-  const String homeAssistantUrl = 'http://192.168.1.33:8123';
-  const String accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzODEyZjNkY2M1NDI0ZWE1OWQ5NzcxOWMzYjc0NGQ3NSIsImlhdCI6MTc2Njc5NDM4OSwiZXhwIjoyMDgyMTU0Mzg5fQ.GoRfVLWy62qrm5KzgNvLPT9cfASBxdF6g8MGibcV0P0';
+  const String homeAssistantUrl = 'http://YOUR_HOME_ASSISTANT_IP:8123';
+  const String accessToken = 'YOUR_LONG_LIVED_ACCESS_TOKEN';
 
   final action = _extractWidgetAction(uri);
 
@@ -103,8 +103,8 @@ class RemoteScreen extends StatefulWidget {
 }
 
 class _RemoteScreenState extends State<RemoteScreen> with TickerProviderStateMixin {
-  final String homeAssistantUrl = 'http://192.168.1.33:8123';
-  final String accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzODEyZjNkY2M1NDI0ZWE1OWQ5NzcxOWMzYjc0NGQ3NSIsImlhdCI6MTc2Njc5NDM4OSwiZXhwIjoyMDgyMTU0Mzg5fQ.GoRfVLWy62qrm5KzgNvLPT9cfASBxdF6g8MGibcV0P0';
+  final String homeAssistantUrl = 'http://YOUR_HOME_ASSISTANT_IP:8123';
+  final String accessToken = 'YOUR_LONG_LIVED_ACCESS_TOKEN';
   
   late AnimationController _feedbackController;
   Timer? _volumeTimer;
