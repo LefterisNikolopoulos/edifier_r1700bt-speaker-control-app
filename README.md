@@ -2,6 +2,10 @@
 
 A high-performance, custom-built Flutter companion application and ESPHome configuration designed to manage Edifier speaker functions (Power, Volume, Mute, Bluetooth/AUX inputs) via **Home Assistant**.
 
+<p align="center">
+  <img src="assets/app_screenshot.jpg" width="300" alt="Edifier Speaker Control App Screenshot">
+</p>
+
 This project provides a complete end-to-end solution:
 1.  **Flutter Android Application**: A mobile remote app with haptic feedback and interactive Home Screen Widgets.
 2.  **ESPHome Firmware**: A configuration for an ESP32 board wired to an Infrared (IR) transmitter, which simulates the physical Edifier remote control signals.
